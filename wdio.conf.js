@@ -2,14 +2,14 @@ exports.config = {
   // ====================
   // Runner Configuration
   // ====================
-  outputDir: 'test-results',
-  runner: 'local',
-  path: '/wd/hub',
+  outputDir: "test-results",
+  runner: "local",
+  path: "/wd/hub",
 
   // ==================
   // Specify Test Files
   // ==================
-  specs: ['test/features/**/*.feature'],
+  specs: ["test/features/**/*.feature"],
   exclude: [],
   //
   // ============
@@ -22,23 +22,20 @@ exports.config = {
   capabilities: [
     {
       maxInstances: 1,
-      browserName: 'chrome',
-      'goog:chromeOptions': {
+      browserName: "chrome",
+      "goog:chromeOptions": {
         // to run chrome headless the following flags are required
         // (see https://developers.google.com/web/updates/2017/04/headless-chrome)
-        args: [
-          '--no-sandbox',
-          '--disable-dev-shm-usage'
-        ]
-      }
-    }
+        args: ["--no-sandbox", "--disable-dev-shm-usage"],
+      },
+    },
   ],
   // ===================
   // Test Configurations
   // ===================
 
   // Level of logging verbosity: trace | debug | info | warn | error | silent
-  logLevel: 'warn',
+  logLevel: "trace",
 
   // bail (default is 0 - don't bail, run all tests).
   bail: 0,
@@ -47,7 +44,7 @@ exports.config = {
   // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
   // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
   // gets prepended directly.
-  baseUrl: 'https://studentbeans.com/',
+  baseUrl: "https://studentbeans.com/",
 
   // Default timeout for all waitFor* commands.
   waitforTimeout: 10000,
@@ -60,37 +57,35 @@ exports.config = {
 
   services: [
     [
-      'chromedriver',
+      "chromedriver",
       {
-        logFileName: 'wdio-chromedriver.log', // default
-        outputDir: 'test-results/driver-logs', // overwrites the config.outputDir
-        args: ['--silent']
-      }
-    ]
+        logFileName: "wdio-chromedriver.log", // default
+        outputDir: "test-results/driver-logs", // overwrites the config.outputDir
+        args: ["--silent"],
+      },
+    ],
   ],
 
-  framework: 'cucumber',
+  framework: "cucumber",
 
   cucumberOpts: {
-    require: ['test/stepDefs/*.js'],
+    require: ["test/stepDefs/*.js"],
     backtrace: false,
     requireModule: [],
     dryRun: false,
     failFast: false,
-    format: ['pretty'],
+    format: ["pretty"],
     colors: true,
     snippets: true,
     source: true,
     profile: [],
     strict: false,
-    tagExpression: 'not @ignore and not @manual',
+    tagExpression: "not @ignore and not @manual",
     timeout: 60000,
-    ignoreUndefinedDefinitions: false
+    ignoreUndefinedDefinitions: false,
   },
 
-  reporters: [
-    'spec'
-  ],
+  reporters: ["spec"],
 
   // =====
   // Hooks
@@ -102,10 +97,10 @@ exports.config = {
    * @param {Array.<String>} specs List of spec file paths that are to be run
    */
   before: function (capabilities, specs) {
-    const chai = require('chai')
-    global.expect = chai.expect
-    browser.setWindowSize(1920, 1080)
-  }
+    const chai = require("chai");
+    global.expect = chai.expect;
+    browser.setWindowSize(1920, 1080);
+  },
   /**
    * Gets executed after all workers got shut down and the process is about to exit. An error
    * thrown in the onComplete hook will result in the test run failing.
@@ -116,4 +111,4 @@ exports.config = {
    */
   /* onComplete: function (exitCode, config, capabilities, results) {
   } */
-}
+};

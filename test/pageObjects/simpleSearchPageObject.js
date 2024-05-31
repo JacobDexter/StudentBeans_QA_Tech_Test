@@ -11,6 +11,9 @@ class SimpleSearchPageObject extends ParentPageObject {
   get searchModal() {
     return $('div[data-testid="modal-overlay"]');
   }
+  get searchPromotedOffers() {
+    return $("h3=Promoted Offers");
+  }
   get searchInput() {
     return $('input[data-testid="search-input"]');
   }
@@ -18,6 +21,9 @@ class SimpleSearchPageObject extends ParentPageObject {
     return $$(
       'div[data-testid="search_results_row"] a[data-testid="search-result-offer"]'
     );
+  }
+  get railOfferTitle(){
+    return $$('data-testid="offer-issuance-title"');
   }
 
   async verifyHomePage() {
@@ -38,32 +44,24 @@ class SimpleSearchPageObject extends ParentPageObject {
   }
 
   async selectSearchItem(index, expectedResult) {
-    await browser.waitUntil(
-      async () => {
-        const results = await this.searchResults;
-        return results.length >= index;
-      },
-      {
-        timeout: 15000, // Increase timeout to handle slower response times
-        timeoutMsg: "Expected number of search results to appear",
-      }
-    );
+  // Ensure search has worked
+  await this.searchPromotedOffers.waitForExist({ reverse: true });
 
-    // Verify that the search result item is displayed and contains the expected text
-    const selectedItem = await this.searchResults[index - 1];
-    await browser.waitUntil(
-      async () => {
-        return await selectedItem.isDisplayed();
-      },
-      {
-        timeout: 5000, // Wait for the specific item to be displayed
-        timeoutMsg: `Search result item ${index} is not displayed`,
-      }
-    );
+  // Get the specific search result element
+  const selectedItem = await this.searchResults[index - 1];
+  const text = await selectedItem.getText();
+  
+  // Ensure case-insensitivity
+  expect(text.toLowerCase()).to.include(expectedResult.toLowerCase());
+  
+  // Click the selected item
+  await selectedItem.click();
+  }
 
-    const text = await selectedItem.getText();
-    expect(text.toLowerCase()).to.include(expectedResult.toLowerCase()); // Ensure case-insensitivity
-    await selectedItem.click();
+  async verifyOfferPage() {
+    // Verify the title of the page
+    const actualTitle = await browser.getTitle();
+    expect(actualTitle).to.include('Samsung 25% Student Discount');
   }
 }
 

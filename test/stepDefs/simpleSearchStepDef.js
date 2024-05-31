@@ -21,3 +21,7 @@ Then(
     await simpleSearchPageObject.selectSearchItem(4, expectedResult);
   }
 );
+
+Then("I am brought to the correct offer page", async () => {
+  await simpleSearchPageObject.verifyOfferPage();
+});

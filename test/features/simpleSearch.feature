@@ -5,4 +5,5 @@ Scenario: As a user I want to search for a brand on studentbeans.com so that I c
   When I open the search bar
   When I enter 'samsung'
   Then I should select the 4th 'Samsung' search listing
+  Then I am brought to the correct offer page
 

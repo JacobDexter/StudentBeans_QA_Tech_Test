@@ -49,7 +49,18 @@ class SimpleSearchPageObject extends ParentPageObject {
       }
     );
 
+    // Verify that the search result item is displayed and contains the expected text
     const selectedItem = await this.searchResults[index - 1];
+    await browser.waitUntil(
+      async () => {
+        return await selectedItem.isDisplayed();
+      },
+      {
+        timeout: 5000, // Wait for the specific item to be displayed
+        timeoutMsg: `Search result item ${index} is not displayed`,
+      }
+    );
+
     const text = await selectedItem.getText();
     expect(text.toLowerCase()).to.include(expectedResult.toLowerCase()); // Ensure case-insensitivity
     await selectedItem.click();

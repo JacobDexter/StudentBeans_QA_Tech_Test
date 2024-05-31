@@ -20,10 +20,6 @@ class SimpleSearchPageObject extends ParentPageObject {
     );
   }
 
-  async goToHomePage() {
-    await browser.url("");
-  }
-
   async verifyHomePage() {
     await this.acceptCookiesButton.click();
     const currentUrl = await browser.getUrl();

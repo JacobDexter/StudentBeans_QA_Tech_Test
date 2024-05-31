@@ -12,6 +12,10 @@ class ParentPageObject {
     const isVisible = await element.isDisplayed();
     expect(isVisible, "Element is not visible").to.be.true;
   }
+
+  async goToHomePage() {
+    await browser.url("");
+  }
 }
 
 module.exports = ParentPageObject;
